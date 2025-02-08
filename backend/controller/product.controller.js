@@ -3,7 +3,7 @@ import Product from "../model/product.model.js";
 export const getAllProducts = async (req, res) => {
     try {
         const products = await Product.find(); // Fetch all products from DB
-        res.json(products);
+        res.status(200).json({ success: true, data: products });
     } catch (error) {
         res.status(500).json({ message: 'Error fetching products', error: error.message });
     }
@@ -19,7 +19,7 @@ export const createProduct = async (req, res) => {
             image: req.body.image
         });
         await newProduct.save();
-        res.status(201).json({ message: 'Product successfully created', product: newProduct });
+        res.status(201).json({ message: 'Product successfully created', data: newProduct });
     } catch (error) {
         res.status(500).json({ message: 'Error creating product', error: error.message });
     }
@@ -37,7 +37,7 @@ export const updateProduct = async (req, res) => {
         if (!updatedProduct) {
             return res.status(404).json({ message: 'Product not found' });
         }
-        res.json({ message: 'Product successfully updated', product: updatedProduct });
+        res.status(200).json({ success: true, message: 'Product successfully updated', data: updatedProduct });
     } catch (error) {
         res.status(500).json({ message: 'Error updating product', error: error.message });
     }
@@ -51,7 +51,7 @@ export const deleteProduct = async (req, res) => {
         if (!deletedProduct) {
             return res.status(404).json({ message: 'Product not found' });
         }
-        res.json({ message: 'Product successfully deleted' });
+        res.status(200).json({ success: true, message: 'Product successfully deleted' });
     } catch (error) {
         res.status(500).json({ message: 'Error deleting product', error: error.message });
     }

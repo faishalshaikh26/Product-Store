@@ -1,4 +1,4 @@
-import {create} from 'zustand'
+import { create } from 'zustand';
 
 export const useProductStore = create((set) => ({
     products: [],
@@ -36,7 +36,6 @@ export const useProductStore = create((set) => ({
         return { success: true, message: "Product created successfully" };
     },
 
-
     fetchProducts: async () => {
         try {
             const res = await fetch('/api/products');
@@ -51,7 +50,7 @@ export const useProductStore = create((set) => ({
 
     deleteProduct: async (pId) => {
         try {
-            const res = await fetch(`${API_URL}/${pId}`, { method: "DELETE" });
+            const res = await fetch(`/api/products/${pId}`, { method: "DELETE" });
             const data = await res.json();
             if (!data.success) throw new Error(data.message);
 
@@ -62,5 +61,40 @@ export const useProductStore = create((set) => ({
         } catch (error) {
             return { success: false, message: error.message };
         }
-    }
+    },
+
+    updateProduct: async (pId, updatedProduct) => {
+        if (!pId || !updatedProduct.name || !updatedProduct.price || !updatedProduct.image) {
+            return { success: false, message: "Please fill in all fields" };
+        }
+
+        try {
+            const res = await fetch(`/api/products/${pId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(updatedProduct),
+            });
+
+            if (!res.ok) {
+                return { success: false, message: "Failed to update product" };
+            }
+
+            const data = await res.json();
+            if (!data.success) {
+                return { success: false, message: data.message };
+            }
+
+            set((state) => ({
+                products: state.products.map((product) =>
+                    product._id === pId ? data.data : product
+                ),
+            }));
+
+            return { success: true, message: "Product updated successfully" };
+        } catch (error) {
+            return { success: false, message: error.message };
+        }
+    },
 }));

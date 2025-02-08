@@ -165,26 +165,38 @@ The `Product.js` file contains the state management logic for the products using
     1. Sends a DELETE request to the `/api/products/{pId}` endpoint.
     2. Checks the response to ensure it is successful.
     3. Updates the `products` array by removing the deleted product.
+- `updateProduct`: An asynchronous function to update a product by its ID. It performs the following steps:
+    1. Validates the `updatedProduct` object to ensure all required fields (`name`, `price`, `image`) are present.
+    2. Sends a PUT request to the `/api/products/{pId}` endpoint with the `updatedProduct` data.
+    3. Checks the response to ensure it is successful and contains valid product data.
+    4. Updates the `products` array with the updated product if the request is successful.
 
-This setup provides state management for creating, fetching, and deleting products.
+This setup provides state management for creating, fetching, updating, and deleting products.
 
 ## Logic of `ProductCard.jsx`
 
 The `ProductCard.jsx` file defines a card component for displaying individual product details using React and Chakra UI. Here's a breakdown of the key elements:
 
 - **Imports**:
-  - Chakra UI components: `Box`, `Image`, `Heading`, `Text`, `HStack`, `IconButton`, `useColorModeValue`, `useToast`
+  - Chakra UI components: `Box`, `Image`, `Heading`, `Text`, `HStack`, `IconButton`, `useColorModeValue`, `useToast`, `Modal`, `ModalOverlay`, `ModalContent`, `ModalHeader`, `ModalCloseButton`, `ModalBody`, `ModalFooter`, `VStack`, `Input`, `Button`, `useDisclosure`
   - Zustand store: `useProductStore`
   - Chakra UI icons: `EditIcon`, `DeleteIcon`
+  - React: `useState`
 
 - **ProductCard Component**:
   - Uses the `useColorModeValue` hook to set the text color and background color based on the current color mode.
-  - Uses the `useProductStore` hook to access the `deleteProduct` function from the Zustand store.
+  - Uses the `useProductStore` hook to access the `deleteProduct` and `updateProduct` functions from the Zustand store.
   - Uses the `useToast` hook from Chakra UI to display toast notifications.
+  - Uses the `useDisclosure` hook to manage the state of the modal for updating the product.
   - The `handleDeleteProduct` function:
     - Calls the `deleteProduct` function with the product ID.
     - Displays a success or error toast notification based on the response.
+  - The `handleUpdateProduct` function:
+    - Calls the `updateProduct` function with the product ID and updated product data.
+    - Displays a success or error toast notification based on the response.
+    - Closes the modal if the update is successful.
   - Displays the product image, name, and price using the `Image`, `Heading`, and `Text` components.
   - Provides `IconButton` components for editing and deleting the product.
+  - Uses a `Modal` component to display a form for updating the product details.
 
-This setup provides a responsive and styled card component for displaying individual product details with delete functionality and toast notifications.
+This setup provides a responsive and styled card component for displaying individual product details with update and delete functionality, including a modal for editing product details and toast notifications.

@@ -79,4 +79,62 @@ Chakra UI is already included in this project. If you need to add it to another 
     },
     })
     ```
+## Logic of `Navbar.jsx`
 
+The `Navbar.jsx` file defines a navigation bar component using React and Chakra UI. Here's a breakdown of the key elements:
+
+- **Imports**:
+  - Chakra UI components: `Button`, `Container`, `Flex`, `Text`, `HStack`, `useColorMode`
+  - React Router: `Link`
+  - React: `React`
+  - Icons: `PlusSquareIcon` from Chakra UI, `IoMoon` from `react-icons/io5`, `LuSun` from `react-icons/lu`
+
+- **Navbar Component**:
+  - Uses the `useColorMode` hook from Chakra UI to handle theme toggling between light and dark modes.
+  - The `Container` component sets the maximum width and padding.
+  - The `Flex` component arranges the child elements in a flexible box layout, with alignment and spacing properties.
+  - The `Text` component displays the title "Product Store 🛒" with styling properties such as font size, weight, text transformation, alignment, and gradient background.
+  - The `HStack` component arranges the buttons horizontally with spacing.
+  - The `Link` component from React Router is used to navigate to different routes (`/` for home and `/create` for creating a new product).
+  - The `Button` components include:
+    - A button with a `PlusSquareIcon` for navigating to the create product page.
+    - A button for toggling the color mode, displaying either the `IoMoon` icon for dark mode or the `LuSun` icon for light mode.
+
+This setup provides a responsive and styled navigation bar with theme toggling and navigation links.
+
+## Logic of `CreatePage.jsx`
+
+The `CreatePage.jsx` file defines a page component for creating a new product using React and Chakra UI. Here's a breakdown of the key elements:
+
+- **Imports**:
+  - Chakra UI components: `Container`, `VStack`, `Heading`, `Box`, `useToast`, `useColorModeValue`, `Input`, `Button`
+  - React: `React`, `useState`
+  - Zustand store: `useProductStore`
+
+- **CreatePage Component**:
+  - Uses the `useState` hook to manage the state of the new product (`name`, `price`, `image`).
+  - Uses the `useProductStore` hook to access the `createProduct` function from the Zustand store.
+  - Uses the `useToast` hook from Chakra UI to display toast notifications.
+  - The `handleAddProduct` function:
+    - Calls the `createProduct` function with the new product data.
+    - Displays a success or error toast notification based on the response.
+  - The `Container` component sets the maximum width.
+  - The `VStack` component arranges the child elements vertically with spacing.
+  - The `Heading` component displays the title "Create New Product" with styling properties.
+  - The `Box` component contains the form elements with styling properties.
+  - The `Input` components are used to capture the product name, price, and image URL.
+  - The `Button` component triggers the `handleAddProduct` function when clicked.
+
+This setup provides a responsive and styled page for creating new products with form validation and toast notifications.
+
+## Logic of `Product.js`
+
+The `Product.js` file contains the state management logic for the products using the `zustand` library. Here's a breakdown of the key functions:
+
+- `products`: An array that holds the list of products.
+- `setProducts`: A function to update the `products` array.
+- `createProduct`: An asynchronous function to create a new product. It performs the following steps:
+    1. Validates the `newProduct` object to ensure all required fields (`name`, `price`, `image`) are present.
+    2. Sends a POST request to the `/api/products` endpoint with the `newProduct` data.
+    3. Checks the response to ensure it is successful and contains valid product data.
+    4. Updates the `products` array with the newly created product if the request is successful.

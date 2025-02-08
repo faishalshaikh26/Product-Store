@@ -3,11 +3,14 @@
   "version": "1.0.0",
   "main": "index.js",
   "devDependencies": {
+    "cross-env": "^7.0.3",
     "nodemon": "^3.1.9"
   },
   "scripts": {
-    "dev": "nodemon backend/server.js"
-  },
+  "dev": "cross-env NODE_ENV=development nodemon backend/server.js",
+  "build": "npm install && npm install --prefix frontend && npm run build --prefix frontend",
+  "start": "cross-env NODE_ENV=production node backend/server.js"
+},
   "dependencies": {
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
@@ -15,7 +18,7 @@
   },
   "keywords": [],
   "type": "module",
-  "author": "",
+  "author": "Mohd Faishal",
   "license": "ISC",
   "description": ""
 }

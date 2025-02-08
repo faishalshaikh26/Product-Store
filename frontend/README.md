@@ -127,6 +127,25 @@ The `CreatePage.jsx` file defines a page component for creating a new product us
 
 This setup provides a responsive and styled page for creating new products with form validation and toast notifications.
 
+## Logic of `HomePage.jsx`
+
+The `HomePage.jsx` file defines the main page component for displaying the list of products using React and Chakra UI. Here's a breakdown of the key elements:
+
+- **Imports**:
+  - Chakra UI components: `Container`, `VStack`, `Text`, `SimpleGrid`
+  - React Router: `Link`
+  - Zustand store: `useProductStore`
+  - React: `useEffect`
+  - Custom component: `ProductCard`
+
+- **HomePage Component**:
+  - Uses the `useProductStore` hook to access the `fetchProducts` function and the `products` array from the Zustand store.
+  - Uses the `useEffect` hook to fetch the products when the component mounts.
+  - Displays the list of products using the `SimpleGrid` component, which arranges the `ProductCard` components in a responsive grid layout.
+  - If no products are found, displays a message with a link to the create product page.
+
+This setup provides a responsive and styled main page for displaying the list of products.
+
 ## Logic of `Product.js`
 
 The `Product.js` file contains the state management logic for the products using the `zustand` library. Here's a breakdown of the key functions:
@@ -138,3 +157,34 @@ The `Product.js` file contains the state management logic for the products using
     2. Sends a POST request to the `/api/products` endpoint with the `newProduct` data.
     3. Checks the response to ensure it is successful and contains valid product data.
     4. Updates the `products` array with the newly created product if the request is successful.
+- `fetchProducts`: An asynchronous function to fetch the list of products from the `/api/products` endpoint. It performs the following steps:
+    1. Sends a GET request to the `/api/products` endpoint.
+    2. Checks the response to ensure it is successful.
+    3. Updates the `products` array with the fetched product data.
+- `deleteProduct`: An asynchronous function to delete a product by its ID. It performs the following steps:
+    1. Sends a DELETE request to the `/api/products/{pId}` endpoint.
+    2. Checks the response to ensure it is successful.
+    3. Updates the `products` array by removing the deleted product.
+
+This setup provides state management for creating, fetching, and deleting products.
+
+## Logic of `ProductCard.jsx`
+
+The `ProductCard.jsx` file defines a card component for displaying individual product details using React and Chakra UI. Here's a breakdown of the key elements:
+
+- **Imports**:
+  - Chakra UI components: `Box`, `Image`, `Heading`, `Text`, `HStack`, `IconButton`, `useColorModeValue`, `useToast`
+  - Zustand store: `useProductStore`
+  - Chakra UI icons: `EditIcon`, `DeleteIcon`
+
+- **ProductCard Component**:
+  - Uses the `useColorModeValue` hook to set the text color and background color based on the current color mode.
+  - Uses the `useProductStore` hook to access the `deleteProduct` function from the Zustand store.
+  - Uses the `useToast` hook from Chakra UI to display toast notifications.
+  - The `handleDeleteProduct` function:
+    - Calls the `deleteProduct` function with the product ID.
+    - Displays a success or error toast notification based on the response.
+  - Displays the product image, name, and price using the `Image`, `Heading`, and `Text` components.
+  - Provides `IconButton` components for editing and deleting the product.
+
+This setup provides a responsive and styled card component for displaying individual product details with delete functionality and toast notifications.
